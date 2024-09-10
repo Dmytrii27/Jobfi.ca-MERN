@@ -1,11 +1,12 @@
-import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { FiEdit3, FiPhoneCall, FiUpload } from "react-icons/fi";
 import { HiLocationMarker } from "react-icons/hi";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
 import { CustomButton, JobCard, Loading, TextInput } from "../components";
 import { Login } from "../redux/userSlice";
 import { apiRequest, handleFileUpload } from "../utils";
@@ -34,7 +35,6 @@ const CompnayForm = ({ open, setOpen }) => {
     setErrMsg(null);
 
     const uri = profileImage && (await handleFileUpload(profileImage));
-   
 
     const newData = uri ? { ...data, profileUrl: uri } : data;
 
@@ -241,6 +241,19 @@ const CompanyProfile = () => {
     <div className='container mx-auto p-5'>
       <div className=''>
         <div className='w-full flex flex-col md:flex-row gap-3 justify-between'>
+          
+          {/* Profile Image */}
+          {info?.profileUrl && (
+            <div className='w-20 h-20'>
+              <img
+                src={info.profileUrl}
+                alt={`${info.name}'s profile`}
+                className='w-full h-full object-cover rounded-full'
+              />
+            </div>
+          )}
+          
+          {/* Welcome Message */}
           <h2 className='text-gray-600 text-xl font-semibold'>
             Welcome, {info?.name}
           </h2>
@@ -304,6 +317,16 @@ const CompanyProfile = () => {
 };
 
 export default CompanyProfile;
+
+
+
+
+
+
+
+
+
+
 
 
 

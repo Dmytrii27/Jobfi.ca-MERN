@@ -96,12 +96,7 @@ const Header = ({
             <div className="w-full lg:1/2 flex flex-wrap gap-3 md:gap-6 py-6 md:py-9 mb-7">
               {[
                 "Software Engineer",
-                "Developer",
                 "Full-Stack Developer",
-                "Data Scientist",
-                "Remote",
-                "Full-Time",
-                "Sales",
                 "Office Assistant",
                 "Project Manager",
                 "UI/UX Designer",
