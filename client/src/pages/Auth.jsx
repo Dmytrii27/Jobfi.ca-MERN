@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { Office } from "../assets";
 import { SignUp } from "../components";
 
 const Auth = () => {

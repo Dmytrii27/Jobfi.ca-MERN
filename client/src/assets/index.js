@@ -7,13 +7,12 @@ import WhatsApp from "./whatsapp.png";
 import Twitter from "./twitter.png";
 import Instagram from "./instagram.png";
 import Spotify from "./spotify.png";
-import Office from "./office.jpg";
+
 import JobImg from "./job.jpg";
 import Facebook from "./facebook.png";
-import CodeWave from "./codewave.png";
+
 
 export {
-  CodeWave,
   NoProfile,
   Facebook,
   WhatsApp,
@@ -24,6 +23,5 @@ export {
   Google,
   Linkedin,
   Youtube,
-  Office,
   JobImg,
 };

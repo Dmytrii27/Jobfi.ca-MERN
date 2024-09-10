@@ -45,19 +45,30 @@ const UserForm = ({ open, setOpen }) => {
 
         setIsSubmitting(false);
         setOpen(false); // Закриваємо модальне вікно після успішного оновлення
+        document.body.style.overflow = "auto"; // Включаємо скролінг знову
       }
     } catch (error) {
       setIsSubmitting(false);
       console.log("Error updating profile:", error);
+      document.body.style.overflow = "auto"; // Включаємо скролінг знову
     }
   };
 
-  const closeModal = () => setOpen(false);
+  const closeModal = () => {
+    setOpen(false);
+    document.body.style.overflow = "auto"; // Включаємо скролінг знову
+  };
 
   return (
     <>
-      <Transition appear show={open ?? false} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+      <Transition
+        appear
+        show={open ?? false}
+        as={Fragment}
+        beforeEnter={() => (document.body.style.overflow = "hidden")}
+        afterLeave={() => (document.body.style.overflow = "auto")}
+      >
+        <Dialog as="div" className="relative z-50" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -70,7 +81,7 @@ const UserForm = ({ open, setOpen }) => {
             <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0 z-50 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
@@ -81,7 +92,7 @@ const UserForm = ({ open, setOpen }) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-lg max-h-auto  transform rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all z-50">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-semibold leading-6 text-gray-900"
@@ -191,7 +202,7 @@ const UserForm = ({ open, setOpen }) => {
                         About
                       </label>
                       <textarea
-                        className="rounded border border-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-base px-4 py-2 resize-none"
+                        className="rounded border border-gray-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black text-base px-4 py-2 resize-none"
                         rows={4}
                         cols={6}
                         {...register("about", {
@@ -215,10 +226,11 @@ const UserForm = ({ open, setOpen }) => {
                         <Loading />
                       ) : (
                         <CustomButton
-                          type="submit"
-                          containerStyles="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-8 py-2 text-sm font-medium text-white hover:bg-[#1d4fd846] hover:text-[#1d4fd8] focus:outline-none "
-                          title={"Submit"}
-                        />
+                        type="submit"
+                        containerStyles="inline-flex justify-center rounded-md border border-transparent bg-black px-8 py-2 text-sm font-medium text-white hover:bg-black hover:text-white focus:outline-none"
+                        title={"Submit"}
+                      />
+        
                       )}
                     </div>
                   </form>
@@ -251,37 +263,31 @@ const UserProfile = () => {
           </h1>
           <p className="text-slate-500 text-lg">{userInfo?.jobTitle ?? "No Title"}</p>
 
-          {/* Замість стопчика, робимо рядок для виводу контактної інформації */}
           <div className="flex gap-4 items-center justify-center text-slate-600 text-sm">
-            <p className="flex gap-1 items-center px-3 py-1 rounded-full">
-              <HiLocationMarker /> {userInfo?.location ?? "No Location"}
-            </p>
-            <p className="flex gap-1 items-center px-3 py-1 rounded-full">
+            <p className="flex items-center gap-1">
               <AiOutlineMail /> {userInfo?.email ?? "No Email"}
             </p>
-            <p className="flex gap-1 items-center px-3 py-1 rounded-full">
+            <p className="flex items-center gap-1">
               <FiPhoneCall /> {userInfo?.contact ?? "No Contact"}
             </p>
+            <p className="flex items-center gap-1">
+              <HiLocationMarker /> {userInfo?.location ?? "No Location"}
+            </p>
           </div>
-        </div>
 
-        <div className="w-full flex flex-col gap-5 justify-center items-center mt-7">
+          <p className="text-center text-sm">{userInfo?.about ?? "No About"}</p>
           <button
             onClick={() => setOpen(true)}
-            className="rounded-md border border-transparent bg-blue-600 px-8 py-2 text-sm font-medium text-white hover:bg-[#1d4fd846] hover:text-[#1d4fd8] focus:outline-none "
+            className="bg-black text-white px-8 py-2 rounded-full mt-8 hover:bg-black hover:text-white"
           >
             Edit Profile
           </button>
+          <UserForm open={open} setOpen={setOpen} />
         </div>
       </div>
-
-      <UserForm open={open} setOpen={setOpen} />
     </div>
   );
 };
 
 export default UserProfile;
-
-
-
 

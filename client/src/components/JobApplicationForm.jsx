@@ -92,7 +92,7 @@ const JobApplicationForm = ({ onClose }) => {
           <label className="text-sm text-gray-600">Upload CV</label>
           <button
             type="submit"
-            className="bg-blue-500 text-white p-2 rounded"
+            className="bg-black text-white p-2 rounded"
           >
             Submit Application
           </button>
